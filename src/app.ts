@@ -4,7 +4,7 @@ import handlerRouter from "../src/Routes/route"
 
 const app = express();
 app.use(express.json());
-app.use("/api", handlerRouter);
+app.use(handlerRouter);
 //rota por parametro:
 // app.get(
 //   "/parametro/:nome",

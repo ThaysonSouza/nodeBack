@@ -1,8 +1,8 @@
 const URL_LOGIN:string = "http://localhost:3000/api/login"
 
 let newLogin = {
-    email: "email",
-    senha: "123"
+    email: "t@h",
+    senha: "abcd123"
 }
 
 test("POST: /login = 201", async () => {
@@ -11,4 +11,5 @@ test("POST: /login = 201", async () => {
         headers:{"Content-Type": "application/json"},
         body: JSON.stringify(newLogin)
     })
+    expect(res.status).toBe(200);
 }) 

@@ -1,5 +1,4 @@
 import { Router } from "express";
-import taskController from "../controller/taskController";
 import loginController from "../controller/loginController";
 
 const rotaLogin = Router();
@@ -10,8 +9,6 @@ const rotaLogin = Router();
 // router.put("/:id", taskController.atualizarTask);
 // router.delete("/:id", taskController.deletarTask);
 
-rotaLogin.post("/", ()=>{
-    console.log('login ok')
-});
+rotaLogin.post("/", loginController.login);
 
 export default rotaLogin;

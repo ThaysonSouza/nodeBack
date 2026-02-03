@@ -1,6 +1,5 @@
 import { Router } from "express";
-import router from "./tasksRouter";
-import loginController from "../controller/loginController";
+// import router from "./tasksRouter";
 import { createJWT } from "../utils/jwt";
 import { middleware } from "./jwtMiddleware";
 import rotaLogin from "./tasksRouter";
@@ -8,9 +7,9 @@ import rotaLogin from "./tasksRouter";
 const handlerRouter = Router();
 
 // rotas publicas
-handlerRouter.use("/tarefas", router);
+// handlerRouter.use("/tarefas", router);
 
-handlerRouter.post("/api/login", rotaLogin);
+handlerRouter.use("/api/login", rotaLogin);
 
 // handlerRouter.use("/jwt", (req, res)=>{
 //     const payload = {
