@@ -1,0 +1,26 @@
+import mysql from "mysql2/promise";
+import dotenv from "dotenv";
+import { rejects } from "assert";
+
+dotenv.config();
+
+export const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    ssl: getSSLValues()
+});
+
+function getSSLValues() {
+    if (process.env.DB_CA) {
+        return {
+            ca: process.env.DB_CA,
+            rejectsUnauthorized: true
+        };
+    }
+    return process.env.NODE_ENV === "production" ? { rejectsUnauthorized: true } : undefined;
+}

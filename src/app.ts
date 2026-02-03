@@ -1,11 +1,10 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
-import router from "./Routes/tasksRouter";
+import handlerRouter from "../src/Routes/route"
 
 const app = express();
 app.use(express.json());
-app.use("/task", router);
-
+app.use("/api", handlerRouter);
 //rota por parametro:
 // app.get(
 //   "/parametro/:nome",
