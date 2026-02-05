@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { error } from "console";
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET!;
@@ -14,8 +15,8 @@ export function createJWT(payload: object) {
 }
 
 export function verifyJWT(token: string) {
-  return jwt.verify(token, JWT_SECRET, function (err: any, decoded: any) {
-    if (err) {
+  return jwt.verify(token, JWT_SECRET, function (erro: any, decoded: any) {
+    if (erro) {
       return undefined;
     }
     return decoded;

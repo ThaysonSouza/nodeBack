@@ -13,12 +13,11 @@ async function login(req:Request, res:Response, next:NextFunction) {
  
  try {
    const result = await validateLogin(email);
-   if (!result) {throw new Error()}
+   if (!result) {throw new Error("login inválido")}
+   const resultadoSenha = await validarSenha(senha, result.senha);
+    if (!resultadoSenha) {throw new Error("senha inválida")}
 
-   console.log(result.email);
-   console.log(result.senha);
-   console.log("Resultado: ", await validarSenha(senha, result.senha));
-   return res.status(200).json;
+   return res.status(200).json(result);
 
  } catch (error) {
    console.log(error);
