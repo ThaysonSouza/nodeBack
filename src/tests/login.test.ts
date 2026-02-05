@@ -1,8 +1,8 @@
 const URL_LOGIN:string = "http://localhost:3000/api/login"
 
 let newLogin = {
-    email: "t@h",
-    senha: "abcd123"
+    email: "joao.silva@email.cm",
+    senha: "senha123"
 }
 
 test("POST: /login = 201", async () => {

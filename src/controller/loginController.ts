@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { validateLogin } from "../repository/loginRepository";
+import{validarSenha} from "../utils/senha";
 
 async function login(req:Request, res:Response, next:NextFunction) {
  const { email, senha } = req.body;
@@ -16,6 +17,7 @@ async function login(req:Request, res:Response, next:NextFunction) {
 
    console.log(result.email);
    console.log(result.senha);
+   console.log("Resultado: ", await validarSenha(senha, result.senha));
    return res.status(200).json;
 
  } catch (error) {
