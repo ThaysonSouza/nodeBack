@@ -1,48 +1,57 @@
 import { Request, Response, NextFunction } from "express";
-import tasksRepository from "../repository/tasksRepository";
-import Task from "../model/task";
+import taskRepository from "../repository/taskRepository";
+import Task from "../model/taskModel";
 
-async function getTasks(req: Request, res: Response, next: NextFunction) {
-  const result = await tasksRepository.getTasks()
-  res.send(result);
+async function getAllTask(req:Request, res:Response, next:NextFunction) {
+  const result = await taskRepository.getAllTasks()
+  res.json(result);
 }
-async function getTask(req: Request, res: Response, next: NextFunction) {
+
+async function getTask(req:Request, res:Response, next:NextFunction) {
   const {id} = req.params
-  const result = await tasksRepository.getTask(parseInt(id));
-  const code = result ? 200 : 404
-  res.status(code).json(result)
+  let result = await taskRepository.getTask(parseInt(id))
+  const status = result ? 200 : 404
+  result = result ? result : ['Tarefa não localizada'] //Erro
+  res.status(status).json(result)
 }
-async function createTask(req: Request, res: Response, next: NextFunction) {
+
+async function createTask(req:Request, res:Response, next:NextFunction) {
+  const taks = req.body as Task
+  try {
+    const result = await taskRepository.createTask(taks)
+    return res.status(201).json(result)
+  } 
+  catch(error) {
+    console.log("Erro ao criar tarefa", error)
+    return res.status(400).json({erro:"Dados invalidos"})
+  }
+}
+
+async function updateTask(req:Request, res:Response, next:NextFunction) {
+  const {id} = req.params
   const task = req.body as Task
   try {
-    const result = await tasksRepository.createTask(task) 
-    return res.status(200).json(result)
-  } catch (error) {
-    console.log("Erro ao criar", error);
-    return res.status(400).json({erro:"dados incompletos/invalidos!"})
-  }  
-}
-async function atualizarTask(req: Request, res: Response, next: NextFunction) {
-  const {id} = req.params;
-  const task = req.body as Task;
-  try {
-    const result = await tasksRepository.atualizarTask(parseInt(id), task)
-    return res.status(200).json(result)  
-  } catch (error) {
-    console.log("erro ao atualizar", error);
-    return res.status(400).json({erro:"dados invalidos"});    
+    const result = await taskRepository.updateTask(parseInt(id), task) 
+    return res.status(201).json(result)
   }
-}
-async function deletarTask(req: Request, res: Response, next: NextFunction) {
-  const {id} = req.params;
-  try {
-    const result = await tasksRepository.deletarTask(parseInt(id))
-    return res.status(200).json(result)
-    
-  } catch (error) {
-    console.log("erro ao deletar", error);
-    return res.status(400).json({erro:"id invalido"});  
+  catch (error) {
+    console.log("Erro ao atualizar tarefa", error)
+    return res.status(400).json({erro:"Dados invalidos"})
   }
 }
 
-export default { getTask, getTasks, createTask, atualizarTask, deletarTask };
+async function deleteTask(req:Request, res:Response, next:NextFunction) {
+  const {id} = req.params
+  try {
+    const result = await taskRepository.deleteTask(parseInt(id))
+    return res.status(200).json(result)
+  }
+  catch (error) {
+    console.log("Erro ao deletar tarefa", error)
+    return res.status(400).json({erro:"Dados invalidos"})
+  }
+}
+
+export default {
+  getAllTask, getTask, createTask, updateTask, deleteTask
+}

@@ -1,6 +1,6 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
-import handlerRouter from "../src/Routes/route"
+import handlerRouter from "../src/Routes/router"
 
 const app = express();
 app.use(express.json());
