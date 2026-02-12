@@ -1,6 +1,5 @@
 import mysql from "mysql2/promise";
 import dotenv from "dotenv";
-import { rejects } from "assert";
 
 dotenv.config();
 

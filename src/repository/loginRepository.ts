@@ -8,13 +8,13 @@ async function login(email:string) {
             clientes.nome,
             clientes.email,
             clientes.senha,
-            funcoes.nome
+            roles.nome
         FROM
             clientes
         JOIN 
-            funcoes
+            roles
         ON 
-            clientes.fk_funcoes = funcoes.id
+            clientes.id_roles_fk = roles.id
         WHERE
             clientes.email = ?
     `;

@@ -1,4 +1,4 @@
-import { verifyJwt } from "../utils/jwt"
+import { verifyJWT } from "../utils/jwt"
 
 const URL_JWT:string = "http://localhost:3000/jwt"
 
@@ -9,6 +9,6 @@ test("GET: /jwt = 200", async () => {
     const body = await res.json()
     expect(typeof body).toBe('string')
 
-    const token = verifyJwt(body)
+    const token = verifyJWT(body)
     expect(typeof token).toBe("object")
 })

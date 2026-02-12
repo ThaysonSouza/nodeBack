@@ -2,44 +2,47 @@ import { Request, Response, NextFunction } from "express";
 import roomRepository from "../repository/roomRepository";
 import { Room } from "../model/roomModel";
 
-async function getAvaibleRooms(req: Request, res: Response, next: NextFunction) {
-
-    console.log("Requisição recebida para buscar quartos disponíveis:");
-
-    const { inicio, fim, qtdPessoas } = req.body;
-
-    if (!inicio || !fim || !qtdPessoas) {
-        return res.status(401).json({ erro: "Todos os campos são obrigatórios" });
-    }
-
-    if (inicio.trim() === "" || fim.trim() === "" || qtdPessoas.toString().trim() === "") { 
-        return res.status(402).json({ erro: "Campos não podem ser vazios" });
-    }
-
+export const createRoom = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const rooms: Room[] = await roomRepository.getAvaibleRooms(inicio, fim, qtdPessoas);
+        const { nome, numero, camaSolteiro, camaCasal, disponivel, preco }: Omit<Room, 'user_id'> = req.body;
+        const user_id = (req as any).payload.id;
 
-        if (rooms.length === 0) {
-            return res.status(403).json({ mensagem: "Nenhum quarto disponível encontrado." });
+        if (!nome || !numero || camaSolteiro === undefined || camaCasal === undefined || disponivel === undefined || preco === undefined) {
+            return res.status(400).json({ error: "Todos os campos são obrigatórios." });
         }
 
-        const formattedRooms = rooms.map(room => {
-            return {
-                id: room.id,
-                nome: room.nome,
-                capacidadeTotal: (room.qtd_cama_casal * 2) + room.qtd_cama_solteiro,
-                preco: room.preco
-            };
-        });
-
-        return res.status(200).json(formattedRooms);
-
+        const result = await roomRepository.createRoom(nome, numero, camaSolteiro, camaCasal, disponivel, preco, user_id);
+        res.status(201).json({ message: "Quarto criado com sucesso.", data: result });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ erro: "Erro interno no servidor" });
+        next(error);
+    }
+};
+
+async function disponiveis(req: Request, res: Response, next: NextFunction) {
+    const { dataInicio, dataFim, quantidade } = req.body;
+    if (!dataInicio || !dataFim || !quantidade) {
+        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+    }
+
+    const dados = {
+        dataInicio,
+        dataFim,
+        quantidade
+    }
+    try{ 
+        let rooms = await roomRepository.disponiveis(dados);
+        if(!rooms){ throw new Error("erro ao buscar quartos") }
+    
+    for (let q of rooms) {
+        const fotos = await roomRepository.getFotos(q.id);
+        q.fotos = fotos;res.json(rooms);
+    }
+    }catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: "Erro ao buscar quartos." });
     }
 }
-
 export default {
-  getAvaibleRooms
+    createRoom,
+    disponiveis
 }
