@@ -1,26 +1,32 @@
 import { Router } from "express";
-// import routeLogin from "./login";
-import routeRoom from "./room";
-import routeTask from "./task";
-import { createJWT } from "../utils/jwt";
+import { createJWT } from "../utils/jwt"
 import { middleware } from "./jwtMiddleware";
+import rotaLogin from "./loginRouter";
 
-const handleRouter = Router();
+import rotaConsultar from "./quartosRouter";
 
 
-// handleRouter.use("/api/client/", routeLogin);
-handleRouter.use("/api/room", routeRoom);
-handleRouter.use("/task", routeTask);
-handleRouter.use("/api/QuartosDisponiveis")
 
-handleRouter.use("/jwt", (req, res) => {
-    const payload = {id: 123, nome: "teste", cargo: "cliente"}
-    res.json(createJWT(payload)) 
+const handlerRouter = Router();
+
+handlerRouter.use("/api/login", rotaLogin);
+
+handlerRouter.use("/api/quartosDisponiveis", rotaConsultar);
+
+
+handlerRouter.use("/jwt", (req, res) => {
+  const payload = {
+    id: 123,
+    nome: "Matheus",
+    cargo: "cliente"
+  }
+  res.json(createJWT(payload))
 })
-handleRouter.get("/testeJWT", middleware, (req, res) => {
-    res.json("Autorizado")
-})   
+
+handlerRouter.get("/testJWT", middleware, (req, res) => {
+  res.json("passou pelo jwt middleware");
+
+})
 
 
-export default handleRouter; 
-
+export default handlerRouter;

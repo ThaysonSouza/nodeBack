@@ -1,48 +1,18 @@
-const URL_LOGIN:string = "http://localhost:3000/api/client/login"
+const URL_base = "http://localhost:3000/api/login";
 
-let newLogin = {
-    email: "joao.silva@email.cm",
-    senha: "senha123",
-}
+test("POST: /login = 200", async () => {
+  const res = await fetch(URL_base, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email: "thayson.sousa@gmail.com",
+      senha: "12345678"
+    }),
+  });
 
-let newClient = {
-    nome: "senha123",
-    email: "senha@gmail.com",
-    telefone: "1540028922",
-}
+  const text = await res.text();  
+  console.log("Status:", res.status);
+  console.log("Corpo da resposta:", text);
 
-let clientId:number = 3
-
-
-test("POST: api/login = 201", async () => {
-    const res = await fetch(URL_LOGIN, {
-        method: "POST",
-        headers:{"Content-Type": "application/json"},
-        body: JSON.stringify(newLogin)
-    })
-    expect(res.status).toBe(201) 
-    const json = await res.json()
-    console.log("Token de login: ")
-    console.log(json)
-}) 
-
-test("POST: api/client = 201", async () => {
-        const res = await fetch("http://localhost:3000/api/client", {
-        method: "POST",
-        headers:{"Content-Type": "application/json"},
-        body: JSON.stringify(newClient)
-    })
-    expect(res.status).toBe(201)
-    const json = await res.json()
-    console.log("Token de cadastro: ")
-    console.log(json)
-})
-
-test("POST: api/client/id = 201", async () => {
-        const res = await fetch(`http://localhost:3000/api/client/${clientId}`, {
-        method: "PUT",
-        headers:{"Content-Type": "application/json"},
-        body: JSON.stringify(newClient)
-    })
-    expect(res.status).toBe(200)
-})
+  expect(res.status).toBe(200);
+});
