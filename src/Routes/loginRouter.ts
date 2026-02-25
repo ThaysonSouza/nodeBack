@@ -1,10 +1,9 @@
 import { Router } from "express";
-import loginController from "../controller/loginController";
-import cadastroController from "../controller/cadastroController";
+import loginController from "../controllers/loginController"
 
 const rotaLogin = Router();
 
-rotaLogin.post("/", loginController.login);
-rotaLogin.post("/cadastro", cadastroController.cadastro);
+rotaLogin.post("/", loginController.loginCliente)
+rotaLogin.post("/cadastro", loginController.cadastroCliente)
 
 export default rotaLogin;
