@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const JWT_SECRET = process.env.JWT_SECRET!
-const DURATION = 60 * 60 * 24
+// const DURATION = 60 * 60 * 24
 
 
 // função para gerar o token
@@ -14,7 +14,7 @@ export function createJWT(data:object){
     }
     
     return jwt.sign(payload, JWT_SECRET, {
-        expiresIn: DURATION,
+        // expiresIn: DURATION,
         algorithm: "HS256"
     })
 }
