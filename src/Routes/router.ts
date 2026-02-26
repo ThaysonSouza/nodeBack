@@ -4,7 +4,7 @@ import { middleware } from "./jwtMiddleware";
 import rotaQuartos from "./quartosRouter";
 import rotaReservas from "./reservaRouter";
 
-const handlerRouter = Router();
+export const handlerRouter = Router();
 
 // rotas publicas
 
@@ -14,6 +14,3 @@ handlerRouter.use("/api/quartosDisponiveis", rotaQuartos);
 // rotas privadas
 handlerRouter.use("/api/reserva", middleware, rotaReservas);
 
-
-
-export default handlerRouter
