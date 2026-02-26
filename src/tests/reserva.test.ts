@@ -23,12 +23,12 @@ test("POST: /api/reserva = 200", async()=>{
             pagamento: "pix",
             quartos: [
                 {
-                    id: 30,
+                    id: 7,
                     dataInicio: "2026/02/19",
                     dataFim: "2026/02/20",
                 },
                 {
-                    id: 29,
+                    id: 7,
                     dataInicio: "2026/02/19",
                     dataFim: "2026/02/20",
                 }

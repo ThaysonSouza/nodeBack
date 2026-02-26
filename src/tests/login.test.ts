@@ -5,7 +5,7 @@ test("POST / login = 200", async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            email: "teste@email.com",
+            email: "joao.silva@email.cm",
             senha: "senha123"}
         )
     });
@@ -20,7 +20,7 @@ test("POST / login(sem senha) = 400", async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            email: "teste@email.com",
+            email: "joao.silva@email.cm",
             senha: ""}
         )
     });
@@ -33,11 +33,11 @@ test("POST / create = 200", async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            nome: "nomeTeste",
+            nome: "Teste",
             email: "teste@email.com",
             senha: "senha123",
-            telefone: "157070-7070",
-            cpf:"123456789-55"
+            telefone: "154002-8922",
+            cpf:"123456789-00"
         })
     });
     expect(res.status).toBe(200);
