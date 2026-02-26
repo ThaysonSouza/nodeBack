@@ -6,7 +6,7 @@ import rotaReservas from "./reservaRouter";
 
 export const handlerRouter = Router();
 
-// rotas publicas
+// rotas publica
 
 handlerRouter.use("/api/login", rotaLogin);
 handlerRouter.use("/api/quartosDisponiveis", rotaQuartos);
