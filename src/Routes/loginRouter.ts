@@ -7,3 +7,4 @@ rotaLogin.post("/", loginController.loginCliente)
 rotaLogin.post("/cadastro", loginController.cadastroCliente)
 
 export default rotaLogin;
+
