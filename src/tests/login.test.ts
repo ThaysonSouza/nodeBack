@@ -42,5 +42,6 @@ test("POST / create = 200", async () => {
     });
     expect(res.status).toBe(200);
     const token = await res.json();
+    
     // console.log(token)
 });
