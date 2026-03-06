@@ -14,6 +14,7 @@ handlerRouter.use("/api/quartosDisponiveis", rotaQuartos);
 
 // rotas privadas
 handlerRouter.use("/api/perfil/senha", middleware, loginController.alterarSenha);
+handlerRouter.put("/api/perfil", middleware, loginController.atualizarPerfil);
 handlerRouter.use("/api/perfil", middleware, loginController.getPerfil);
 handlerRouter.use("/api/reserva", middleware, rotaReservas);
 

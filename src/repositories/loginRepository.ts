@@ -47,6 +47,12 @@ async function atualizarSenha(id: number, novaSenhaHash: string): Promise<boolea
     return result.affectedRows > 0;
 }
 
+async function atualizarPerfil(id: number, nome: string, email: string, telefone: string): Promise<boolean> {
+    const sql = `UPDATE clientes SET nome = ?, email = ?, telefone = ? WHERE id = ?`;
+    const [result] = await pool.query<ResultSetHeader>(sql, [nome, email, telefone, id]);
+    return result.affectedRows > 0;
+}
+
 export default {
-    validarLogin, cadastrarLogin, buscarPorId, buscarSenhaPorId, atualizarSenha
+    validarLogin, cadastrarLogin, buscarPorId, buscarSenhaPorId, atualizarSenha, atualizarPerfil
 }

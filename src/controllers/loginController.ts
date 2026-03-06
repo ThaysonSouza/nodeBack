@@ -120,6 +120,30 @@ async function alterarSenha(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function atualizarPerfil(req: Request, res: Response, next: NextFunction) {
+    const payload = (req as any).payload;
+    const { nome, email, telefone } = req.body;
+
+    if (!payload || !payload.id) {
+        return res.status(401).json({ erro: "Não autorizado" });
+    }
+
+    if (!nome || !email || !telefone) {
+        return res.status(400).json({ erro: "Todos os campos são obrigatórios" });
+    }
+
+    try {
+        const sucesso = await loginRepository.atualizarPerfil(payload.id, nome, email, telefone);
+        if (sucesso) {
+            return res.status(200).json({ mensagem: "Perfil atualizado com sucesso" });
+        } else {
+            return res.status(500).json({ erro: "Erro ao atualizar perfil" });
+        }
+    } catch (error) {
+        return res.status(500).json({ erro: "Erro interno ao atualizar perfil" });
+    }
+}
+
 export default {
-    loginCliente, cadastroCliente, getPerfil, alterarSenha
+    loginCliente, cadastroCliente, getPerfil, alterarSenha, atualizarPerfil
 }
