@@ -84,6 +84,42 @@ async function getPerfil(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function alterarSenha(req: Request, res: Response, next: NextFunction) {
+    const payload = (req as any).payload;
+    const { senhaAtual, novaSenha } = req.body;
+
+    if (!payload || !payload.id) {
+        return res.status(401).json({ erro: "Não autorizado" });
+    }
+
+    if (!senhaAtual || !novaSenha) {
+        return res.status(400).json({ erro: "Dados incompletos" });
+    }
+
+    try {
+        const senhaHashAtual = await loginRepository.buscarSenhaPorId(payload.id);
+        if (!senhaHashAtual) {
+            return res.status(404).json({ erro: "Usuário não encontrado" });
+        }
+
+        const senhaValida = await validarSenha(senhaAtual, senhaHashAtual);
+        if (!senhaValida) {
+            return res.status(400).json({ erro: "Senha atual incorreta" });
+        }
+
+        const novaSenhaHash = await gerarSenha(novaSenha);
+        const sucesso = await loginRepository.atualizarSenha(payload.id, novaSenhaHash);
+
+        if (sucesso) {
+            return res.status(200).json({ mensagem: "Senha alterada com sucesso" });
+        } else {
+            return res.status(500).json({ erro: "Erro ao atualizar senha" });
+        }
+    } catch (error) {
+        return res.status(500).json({ erro: "Erro interno ao alterar senha" });
+    }
+}
+
 export default {
-    loginCliente, cadastroCliente, getPerfil
+    loginCliente, cadastroCliente, getPerfil, alterarSenha
 }

@@ -35,6 +35,18 @@ async function buscarPorId(id: number): Promise<Login | null> {
     return rows.length ? rows[0] : null;
 }
 
+async function buscarSenhaPorId(id: number): Promise<string | null> {
+    const sql = `SELECT senha FROM clientes WHERE id = ?`;
+    const [rows] = await pool.query<any[]>(sql, [id]);
+    return rows.length ? rows[0].senha : null;
+}
+
+async function atualizarSenha(id: number, novaSenhaHash: string): Promise<boolean> {
+    const sql = `UPDATE clientes SET senha = ? WHERE id = ?`;
+    const [result] = await pool.query<ResultSetHeader>(sql, [novaSenhaHash, id]);
+    return result.affectedRows > 0;
+}
+
 export default {
-    validarLogin, cadastrarLogin, buscarPorId
+    validarLogin, cadastrarLogin, buscarPorId, buscarSenhaPorId, atualizarSenha
 }

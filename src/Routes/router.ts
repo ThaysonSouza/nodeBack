@@ -13,6 +13,7 @@ handlerRouter.use("/api/login", rotaLogin);
 handlerRouter.use("/api/quartosDisponiveis", rotaQuartos);
 
 // rotas privadas
+handlerRouter.use("/api/perfil/senha", middleware, loginController.alterarSenha);
 handlerRouter.use("/api/perfil", middleware, loginController.getPerfil);
 handlerRouter.use("/api/reserva", middleware, rotaReservas);
 
