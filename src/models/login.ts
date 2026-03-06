@@ -1,11 +1,13 @@
 import { RowDataPacket } from "mysql2";
 
-export type Login = RowDataPacket &{
+export type Login = RowDataPacket & {
     id: number;
-    nome:string;
-    email:string;
-    senha:string;
-    cargo:string;
+    nome: string;
+    email: string;
+    senha: string;
+    cargo: string;
+    cpf?: string;
+    telefone?: string;
 }
 
 export type dadosLogin = {
