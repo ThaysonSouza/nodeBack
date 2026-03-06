@@ -25,7 +25,7 @@ async function buscarFotoPorQuartoId(id: number) {
         WHERE QF.id_quarto_fk = ?`;
 
     const [fotos] = await pool.query<RowDataPacket[]>(sql, [id])
-    return fotos.map(foto => (foto.nome))
+    return fotos.map(foto => (foto.caminho))
 }
 
 export default {
