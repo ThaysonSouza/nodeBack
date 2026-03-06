@@ -1,4 +1,4 @@
-const url_base:string = "http://localhost:3000/api/login";
+const url_base:string = "https://node-back-rose.vercel.app/api/login";
  
 test("POST / login = 200", async () => {
     const res = await fetch(url_base, {
