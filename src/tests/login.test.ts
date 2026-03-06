@@ -5,13 +5,14 @@ test("POST / login = 200", async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            email: "joao.silva@email.cm",
+            email: "jeff@email.com",
             senha: "senha123"}
         )
     });
-    expect(res.status).toBe(200);
+    console.log(res);
     const json = await res.json()
-    // console.log(json);
+    console.log(json);
+    expect(res.status).toBe(200);
 });
 
 
@@ -33,15 +34,17 @@ test("POST / create = 200", async () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            nome: "Teste",
-            email: "teste@email.com",
+            nome: "Jeff",
+            email: "jeff2@email.com",
             senha: "senha123",
-            telefone: "154002-8922",
-            cpf:"123456789-00"
+            telefone: "154004-8922",
+            cpf:"123456789-01"
         })
     });
-    expect(res.status).toBe(200);
+    console.log(res);
     const token = await res.json();
-    
+    console.log(token);
+    expect(res.status).toBe(200);
+
     // console.log(token)
 });

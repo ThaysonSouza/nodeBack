@@ -22,5 +22,5 @@ function getSSLValues() {
             rejectsUnauthorized: true
         };
     }
-    return process.env.NODE_ENV === "production" ? { rejectsUnauthorized: true } : undefined;
+    return process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined;
 }
